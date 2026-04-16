@@ -5,6 +5,10 @@ It uses **[electron-vite](https://electron-vite.org/)** to build the main, prelo
 The baseline includes essential cross-platform desktop capabilities for **Windows, macOS, and Linux** (window lifecycle/state restore, safe IPC bridge, external-link handling, environment-driven startup behavior, and logging).  
 It also presents a production-oriented architecture that helps teams design and extend the exact product they want by separating Electron main, preload, and renderer responsibilities clearly.
 
+- Source: [GitHub Repository](https://github.com/Road-Glide/electron-vite-react-ts)
+- Issues: [Bug Reports & Feature Requests](https://github.com/Road-Glide/electron-vite-react-ts/issues)
+- npm: [create-electron-vite-react-ts](https://www.npmjs.com/package/create-electron-vite-react-ts)
+
 
 ## Create CLI Usage
 
@@ -14,7 +18,7 @@ Publish this package to npm as `create-electron-vite-react-ts`, then bootstrap a
 npx create-electron-vite-react-ts my-desktop-app
 cd my-desktop-app
 npm install
-npm run dev
+npm run start
 ```
 
 ## Requirements
