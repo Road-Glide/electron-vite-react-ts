@@ -17,13 +17,6 @@ npm install
 npm run dev
 ```
 
-### Publish Checklist
-
-```bash
-npm login
-npm publish --access public
-```
-
 ## Requirements
 
 - **Node.js** — LTS recommended (for example, Node 20+)

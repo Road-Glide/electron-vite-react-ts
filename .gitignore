@@ -27,6 +27,9 @@ dist-ssr
 
 .cursor
 .github
+!.github/
+!.github/workflows/
+!.github/workflows/*.yml
 .env
 
 .flows
