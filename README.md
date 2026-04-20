@@ -1,4 +1,11 @@
+![header](https://capsule-render.vercel.app/api?type=waving&color=timeGradient&height=130&section=header&text=Road-Glide/electron-vite-react-ts&fontSize=30&fontColor=ffffff&fontAlign=70&fontAlignY=40)
 # electron-vite-react-ts
+
+[![npm version](https://img.shields.io/npm/v/create-electron-vite-react-ts.svg)](https://www.npmjs.com/package/create-electron-vite-react-ts)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/Road-Glide/electron-vite-react-ts/blob/master/LICENSE)
+[![CI](https://github.com/Road-Glide/electron-vite-react-ts/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/Road-Glide/electron-vite-react-ts/actions/workflows/ci.yml)
+[![Node 20](https://img.shields.io/badge/node-20.x-43853d.svg?logo=node.js&logoColor=white)](https://github.com/Road-Glide/electron-vite-react-ts/blob/master/.github/workflows/ci.yml)
+[![Node 22](https://img.shields.io/badge/node-22.x-43853d.svg?logo=node.js&logoColor=white)](https://github.com/Road-Glide/electron-vite-react-ts)
 
 An Electron desktop application built with **React 18** and **TypeScript**.  
 It uses **[electron-vite](https://electron-vite.org/)** to build the main, preload, and renderer processes together.  
@@ -18,12 +25,12 @@ Publish this package to npm as `create-electron-vite-react-ts`, then bootstrap a
 npx create-electron-vite-react-ts my-desktop-app
 cd my-desktop-app
 npm install
-npm run start
+npm run start # or npm run dev for development mode
 ```
 
 ## Requirements
 
-- **Node.js** — LTS recommended (for example, Node 20+)
+- **Node.js** — **20.x** or **22.x** (CI uses 20; see `.nvmrc` for the pinned 22.x line)
 - **npm** — package manager
 
 ## Getting Started
@@ -191,7 +198,10 @@ npm run release
 
 ## Tech Stack
 
-- **Runtime:** Electron 30
+- **Runtime:** Electron 39.8.5
 - **Bundler / Dev:** Vite 6, electron-vite 5
-- **UI:** React 18, TypeScript 5
-- **Quality:** ESLint, Prettier
+- **UI:** React 18, TypeScript 5.x
+- **Quality:** ESLint 9, Prettier 3
+- **Packaging:** electron-builder 26
+
+![footer](https://capsule-render.vercel.app/api?type=waving&color=timeGradient&height=70&section=footer)

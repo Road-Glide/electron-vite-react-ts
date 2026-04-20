@@ -2,6 +2,22 @@
 	"name": "create-electron-vite-react-ts",
 	"version": "0.1.3",
 	"description": "Create an Electron + Vite + React + TypeScript desktop app.",
+	"keywords": [
+		"electron",
+		"electron-vite",
+		"vite",
+		"react",
+		"typescript",
+		"desktop",
+		"scaffold",
+		"boilerplate",
+		"starter",
+		"template",
+		"create-electron-app",
+		"cross-platform",
+		"ipc",
+		"context-bridge"
+	],
 	"license": "MIT",
 	"type": "module",
 	"bin": {
