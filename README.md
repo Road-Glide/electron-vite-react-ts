@@ -88,6 +88,7 @@ npm install
 ├─ tsconfig.app.json
 ├─ tsconfig.electron.json
 └─ package.json
+
 ```
 
 - All build outputs are placed under **`dist/`**: `dist/main/`, `dist/preload/`, and renderer files (`index.html`, `assets/`).
