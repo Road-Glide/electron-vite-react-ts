@@ -4,9 +4,10 @@
 [![npm version](https://img.shields.io/npm/v/create-electron-vite-react-ts.svg)](https://www.npmjs.com/package/create-electron-vite-react-ts)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/Road-Glide/electron-vite-react-ts/blob/master/LICENSE)
 [![CI](https://github.com/Road-Glide/electron-vite-react-ts/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/Road-Glide/electron-vite-react-ts/actions/workflows/ci.yml)
-[![Node 22.12+](https://img.shields.io/badge/node-%3E%3D22.12-43853d.svg?logo=node.js&logoColor=white)](https://nodejs.org/)
+[![Node 20](https://img.shields.io/badge/node-20.x-43853d.svg?logo=node.js&logoColor=white)](https://github.com/Road-Glide/electron-vite-react-ts/blob/master/.github/workflows/ci.yml)
+[![Node 22](https://img.shields.io/badge/node-22.x-43853d.svg?logo=node.js&logoColor=white)](https://github.com/Road-Glide/electron-vite-react-ts)
 
-An Electron desktop application built with **React 19** and **TypeScript**.  
+An Electron desktop application built with **React 18** and **TypeScript**.  
 It uses **[electron-vite](https://electron-vite.org/)** to build the main, preload, and renderer processes together.  
 The baseline includes essential cross-platform desktop capabilities for **Windows, macOS, and Linux** (window lifecycle/state restore, safe IPC bridge, external-link handling, environment-driven startup behavior, and logging).  
 It also presents a production-oriented architecture that helps teams design and extend the exact product they want by separating Electron main, preload, and renderer responsibilities clearly.
@@ -29,7 +30,7 @@ npm run start # or npm run dev for development mode
 
 ## Requirements
 
-- **Node.js** — **22.12+** (upstream **`electron`** 42.x declares this in its `engines` field; use this for install and dev unless you knowingly override tooling behavior). The GitHub Actions workflow in `.github/workflows/ci.yml` may still specify another Node series—update CI when aligning with Electron’s requirement.
+- **Node.js** — **20.x** or **22.x** (CI uses 20; see `.nvmrc` for the pinned 22.x line)
 - **npm** — package manager
 
 ## Getting Started
@@ -39,8 +40,6 @@ Install dependencies after cloning the repository:
 ```bash
 npm install
 ```
-
-`npm install` runs **`postinstall`** from `package.json`, which invokes `node ./node_modules/electron/install.js` so the Electron binary and `path.txt` are created after dependency install.
 
 ## npm Scripts
 
@@ -99,31 +98,31 @@ npm install
 This project is organized to scale by separating concerns between Electron main, preload bridge, and renderer UI.
 
 - **Renderer feature growth**
-  - Add feature folders under `src/renderer/` (for example, `src/renderer/features/<feature-name>/`).
-  - Create `src/components/` for reusable presentation/UI components shared across screens.
-  - Create `src/stores/` for app-wide state management (for example, auth/session/app settings).
-  - Keep visual styles in `src/styles/` or feature-local style files.
-  - Keep `main.tsx` as pure bootstrap; avoid placing business logic there.
+	- Add feature folders under `src/renderer/` (for example, `src/renderer/features/<feature-name>/`).
+	- Create `src/components/` for reusable presentation/UI components shared across screens.
+	- Create `src/stores/` for app-wide state management (for example, auth/session/app settings).
+	- Keep visual styles in `src/styles/` or feature-local style files.
+	- Keep `main.tsx` as pure bootstrap; avoid placing business logic there.
 
 - **IPC-first desktop capabilities**
-  - Define channel names and handlers in `electron/ipc.ts`.
-  - Expose minimal, safe APIs in `electron/preload.ts` via `contextBridge`.
-  - Consume those APIs in renderer through `window.electronAPI` with typed contracts in `src/types/renderer.d.ts`.
-  - Prefer `invoke/handle` for request-response flows; reserve event channels for streaming/push use cases.
+	- Define channel names and handlers in `electron/ipc.ts`.
+	- Expose minimal, safe APIs in `electron/preload.ts` via `contextBridge`.
+	- Consume those APIs in renderer through `window.electronAPI` with typed contracts in `src/types/renderer.d.ts`.
+	- Prefer `invoke/handle` for request-response flows; reserve event channels for streaming/push use cases.
 
 - **Main-process service layering**
-  - As logic grows, split `electron/main.ts` into domain modules (for example, `electron/services/window-state.ts`, `electron/services/menu.ts`).
-  - Keep `main.ts` as orchestration/composition layer.
+	- As logic grows, split `electron/main.ts` into domain modules (for example, `electron/services/window-state.ts`, `electron/services/menu.ts`).
+	- Keep `main.ts` as orchestration/composition layer.
 
 - **Configuration and environment strategy**
-  - Centralize env parsing/defaults in `electron/dotenv.ts`.
-  - Add new flags in `.env.example` with clear comments and production-safe defaults.
-  - Keep renderer-safe env usage prefixed and explicit.
+	- Centralize env parsing/defaults in `electron/dotenv.ts`.
+	- Add new flags in `.env.example` with clear comments and production-safe defaults.
+	- Keep renderer-safe env usage prefixed and explicit.
 
 - **Build and packaging evolution**
-  - Renderer root is `src/renderer`, while output is unified under `dist/`.
-  - Packaging outputs are isolated in `release/` via `build.directories.output`.
-  - Add platform-specific packaging options in `package.json > build` as distribution needs increase.
+	- Renderer root is `src/renderer`, while output is unified under `dist/`.
+	- Packaging outputs are isolated in `release/` via `build.directories.output`.
+	- Add platform-specific packaging options in `package.json > build` as distribution needs increase.
 
 ## Feature Expansion Checklist
 
@@ -138,15 +137,15 @@ When adding a new desktop capability:
 ## Development Notes
 
 - In development mode, electron-vite passes the renderer URL through **`ELECTRON_RENDERER_URL`** (kept with fallback support for legacy `VITE_DEV_SERVER_URL`).
-- If Unicode/Korean output is broken in Windows terminal, run `npm run lang` first and execute commands in the same session.
+- If Unicode/Korean output is broken in Windows terminal, run `npm run ko` first and execute commands in the same session.
 - Renderer clicks on external `http(s)` links are handled via IPC (`app:open-external`) and opened in the **system default browser**, not inside the app.
 
 ## Window State Restore Policy
 
 - **Saved by run mode:** development (with dev server) and production (loading built files) use separate state files.
-  - `window-state.development.json`
-  - `window-state.production.json`
-  - These files are stored in Electron's **`userData`** directory.
+	- `window-state.development.json`
+	- `window-state.production.json`
+	- These files are stored in Electron's **`userData`** directory.
 - **Save timing:** state is saved **once right before `close`**, not on every move/resize.
 - **Saved fields:** absolute position (`x`, `y`), size (`width`, `height`), maximized state, **display ID (`displayId`)**, display-relative offsets (`offsetX`, `offsetY`), and work-area size (`workAreaWidth`, `workAreaHeight`).
 - **Restore order:** the window starts with **`show: false`**, then applies saved bounds (or maximize) on `ready-to-show`, and finally calls **`show()`** to reduce flicker and first-paint size jumps.
@@ -157,13 +156,13 @@ When adding a new desktop capability:
 
 - `SCREEN_CENTER` is read from `.env` (or `process.env`) and applies in both development and production.
 - The centering decision runs during startup before the first `show()` and only when all conditions are met:
-  - `SCREEN_CENTER=true`
-  - window is not maximized
-  - window size is smaller than the target display work area
+	- `SCREEN_CENTER=true`
+	- window is not maximized
+	- window size is smaller than the target display work area
 - Because window-state is separated by run mode, centering can lead to different visible results:
-  - **Development mode:** uses `window-state.development.json`
-  - **Production mode:** uses `window-state.production.json`
-  - If the two mode files store different size/position history, startup placement can differ by mode even with the same `SCREEN_CENTER` value.
+	- **Development mode:** uses `window-state.development.json`
+	- **Production mode:** uses `window-state.production.json`
+	- If the two mode files store different size/position history, startup placement can differ by mode even with the same `SCREEN_CENTER` value.
 
 ## Electron Menu Visibility
 
@@ -199,13 +198,10 @@ npm run release
 
 ## Tech Stack
 
-Versions match **`package.json`** dependency ranges (`^`):
-
-- **Runtime:** Electron **42**
-- **Bundler / Dev:** Vite **7**, electron-vite **5**, `@vitejs/plugin-react` **5**
-- **UI:** React **19**, TypeScript **6**
-- **Quality:** ESLint **10**, Prettier **3**
-- **Packaging:** electron-builder **26**
-- **Supporting:** vite-plugin-electron **0.29**, vite-plugin-electron-renderer **0.14**
+- **Runtime:** Electron 39.8.5
+- **Bundler / Dev:** Vite 6, electron-vite 5
+- **UI:** React 18, TypeScript 5.x
+- **Quality:** ESLint 9, Prettier 3
+- **Packaging:** electron-builder 26
 
 ![footer](https://capsule-render.vercel.app/api?type=waving&color=timeGradient&height=70&section=footer)
