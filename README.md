@@ -4,10 +4,9 @@
 [![npm version](https://img.shields.io/npm/v/create-electron-vite-react-ts.svg)](https://www.npmjs.com/package/create-electron-vite-react-ts)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/Road-Glide/electron-vite-react-ts/blob/master/LICENSE)
 [![CI](https://github.com/Road-Glide/electron-vite-react-ts/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/Road-Glide/electron-vite-react-ts/actions/workflows/ci.yml)
-[![Node 20](https://img.shields.io/badge/node-20.x-43853d.svg?logo=node.js&logoColor=white)](https://github.com/Road-Glide/electron-vite-react-ts/blob/master/.github/workflows/ci.yml)
-[![Node 22](https://img.shields.io/badge/node-22.x-43853d.svg?logo=node.js&logoColor=white)](https://github.com/Road-Glide/electron-vite-react-ts)
+[![Node 22.12+](https://img.shields.io/badge/node-%3E%3D22.12-43853d.svg?logo=node.js&logoColor=white)](https://nodejs.org/)
 
-An Electron desktop application built with **React 18** and **TypeScript**.  
+An Electron desktop application built with **React 19** and **TypeScript**.  
 It uses **[electron-vite](https://electron-vite.org/)** to build the main, preload, and renderer processes together.  
 The baseline includes essential cross-platform desktop capabilities for **Windows, macOS, and Linux** (window lifecycle/state restore, safe IPC bridge, external-link handling, environment-driven startup behavior, and logging).  
 It also presents a production-oriented architecture that helps teams design and extend the exact product they want by separating Electron main, preload, and renderer responsibilities clearly.
@@ -30,7 +29,7 @@ npm run start # or npm run dev for development mode
 
 ## Requirements
 
-- **Node.js** — **20.x** or **22.x** (CI uses 20; see `.nvmrc` for the pinned 22.x line)
+- **Node.js** — **22.12+** (upstream **`electron`** 42.x declares this in its `engines` field; use this for install and dev unless you knowingly override tooling behavior). The GitHub Actions workflow in `.github/workflows/ci.yml` may still specify another Node series—update CI when aligning with Electron’s requirement.
 - **npm** — package manager
 
 ## Getting Started
@@ -40,6 +39,8 @@ Install dependencies after cloning the repository:
 ```bash
 npm install
 ```
+
+`npm install` runs **`postinstall`** from `package.json`, which invokes `node ./node_modules/electron/install.js` so the Electron binary and `path.txt` are created after dependency install.
 
 ## npm Scripts
 
@@ -137,7 +138,7 @@ When adding a new desktop capability:
 ## Development Notes
 
 - In development mode, electron-vite passes the renderer URL through **`ELECTRON_RENDERER_URL`** (kept with fallback support for legacy `VITE_DEV_SERVER_URL`).
-- If Unicode/Korean output is broken in Windows terminal, run `npm run ko` first and execute commands in the same session.
+- If Unicode/Korean output is broken in Windows terminal, run `npm run lang` first and execute commands in the same session.
 - Renderer clicks on external `http(s)` links are handled via IPC (`app:open-external`) and opened in the **system default browser**, not inside the app.
 
 ## Window State Restore Policy
@@ -198,10 +199,13 @@ npm run release
 
 ## Tech Stack
 
-- **Runtime:** Electron 39.8.5
-- **Bundler / Dev:** Vite 6, electron-vite 5
-- **UI:** React 18, TypeScript 5.x
-- **Quality:** ESLint 9, Prettier 3
-- **Packaging:** electron-builder 26
+Versions match **`package.json`** dependency ranges (`^`):
+
+- **Runtime:** Electron **42**
+- **Bundler / Dev:** Vite **7**, electron-vite **5**, `@vitejs/plugin-react` **5**
+- **UI:** React **19**, TypeScript **6**
+- **Quality:** ESLint **10**, Prettier **3**
+- **Packaging:** electron-builder **26**
+- **Supporting:** vite-plugin-electron **0.29**, vite-plugin-electron-renderer **0.14**
 
 ![footer](https://capsule-render.vercel.app/api?type=waving&color=timeGradient&height=70&section=footer)
