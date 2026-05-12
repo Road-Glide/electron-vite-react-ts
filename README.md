@@ -4,8 +4,7 @@
 [![npm version](https://img.shields.io/npm/v/create-electron-vite-react-ts.svg)](https://www.npmjs.com/package/create-electron-vite-react-ts)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/Road-Glide/electron-vite-react-ts/blob/master/LICENSE)
 [![CI](https://github.com/Road-Glide/electron-vite-react-ts/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/Road-Glide/electron-vite-react-ts/actions/workflows/ci.yml)
-[![Node 20](https://img.shields.io/badge/node-20.x-43853d.svg?logo=node.js&logoColor=white)](https://github.com/Road-Glide/electron-vite-react-ts/blob/master/.github/workflows/ci.yml)
-[![Node 22](https://img.shields.io/badge/node-22.x-43853d.svg?logo=node.js&logoColor=white)](https://github.com/Road-Glide/electron-vite-react-ts)
+[![Node 22.12+](https://img.shields.io/badge/node-%3E%3D22.12-43853d.svg?logo=node.js&logoColor=white)](https://nodejs.org/)
 
 An Electron desktop application built with **React 18** and **TypeScript**.  
 It uses **[electron-vite](https://electron-vite.org/)** to build the main, preload, and renderer processes together.  
@@ -30,7 +29,7 @@ npm run start # or npm run dev for development mode
 
 ## Requirements
 
-- **Node.js** — **20.x** or **22.x** (CI uses 20; see `.nvmrc` for the pinned 22.x line)
+- **Node.js** — **22.x** (CI uses 20; see `.nvmrc` for the pinned 22.x line)
 - **npm** — package manager
 
 ## Getting Started
