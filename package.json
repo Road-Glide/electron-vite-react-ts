@@ -42,7 +42,6 @@
 		"LICENSE"
 	],
 	"scripts": {
-		"create:test": "node ./bin/create-electron-vite-react-ts.js tmp-create-test",
 		"dev": "electron-vite dev",
 		"build": "tsc -b && electron-vite build",
 		"lint": "eslint .",

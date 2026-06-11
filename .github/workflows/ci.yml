@@ -14,10 +14,10 @@ jobs:
         node-version: [20, 22]
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node-version }}
           cache: npm
@@ -38,4 +38,8 @@ jobs:
         run: npm pack --dry-run
 
       - name: Scaffold smoke test
-        run: npm run create:test
+        run: |
+          rm -rf tmp-create-test
+          node ./bin/create-electron-vite-react-ts.js tmp-create-test
+          test -f tmp-create-test/package.json
+          rm -rf tmp-create-test
