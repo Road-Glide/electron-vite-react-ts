@@ -1,6 +1,6 @@
 {
 	"name": "create-electron-vite-react-ts",
-	"version": "0.1.7",
+	"version": "0.1.8",
 	"description": "Create an Electron + Vite + React + TypeScript desktop app.",
 	"keywords": [
 		"electron",
