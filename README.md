@@ -16,7 +16,6 @@ It also presents a production-oriented architecture that helps teams design and 
 - Issues: [Bug Reports & Feature Requests](https://github.com/Road-Glide/electron-vite-react-ts/issues)
 - npm: [create-electron-vite-react-ts](https://www.npmjs.com/package/create-electron-vite-react-ts)
 
-
 ## Create CLI Usage
 
 Publish this package to npm as `create-electron-vite-react-ts`, then bootstrap a new app:
@@ -30,8 +29,8 @@ npm run start # or npm run dev for development mode
 
 ## Requirements
 
-- **Node.js** — **20.x** or **22.x** (CI uses 20; see `.nvmrc` for the pinned 22.x line)
-- **npm** — package manager
+- **Node.js** - **20.x** or **22.x** (CI verifies both versions)
+- **npm** - package manager
 
 ## Getting Started
 
@@ -45,7 +44,7 @@ npm install
 
 | Command | Description |
 |------|------|
-| `npm run dev` | Development mode — runs Vite dev server and Electron |
+| `npm run dev` | Development mode; runs Vite dev server and Electron |
 | `npm run build` | Runs TypeScript project reference build, then `electron-vite build` |
 | `npm run start` | Preview built output with `electron-vite preview` |
 | `npm run lint` | Run ESLint |
@@ -60,34 +59,30 @@ npm install
 
 ```text
 .
-├─ electron/
-│  ├─ main.ts              # Main process bootstrap and window lifecycle
-│  ├─ preload.ts           # ContextBridge APIs exposed to renderer
-│  ├─ ipc.ts               # IPC channel constants and handlers
-│  ├─ logger.ts            # Main-process logger (file/console policy)
-│  └─ dotenv.ts            # .env parser + shared global typings
-├─ src/
-│  ├─ renderer/
-│  │  ├─ index.html        # Renderer HTML entry (Vite root)
-│  │  ├─ main.tsx          # Renderer React bootstrap
-│  │  └─ App.tsx           # Root React component
-│  ├─ components/          # Recommended shared UI components folder (create when scaling)
-│  ├─ stores/              # Recommended state stores folder (create when scaling)
-│  ├─ styles/
-│  │  ├─ index.css         # Global styles
-│  │  └─ App.css           # App-level styles
-│  ├─ assets/
-│  │  └─ react.svg
-│  └─ types/
-│     └─ renderer.d.ts     # Window global type declarations
-├─ public/                 # Static assets copied by Vite/electron-vite
-├─ logs/                   # Runtime logs (dev/non-packaged)
-├─ dist/                   # Build output (main/preload/renderer)
-├─ release/                # electron-builder artifacts
-├─ electron.vite.config.ts
-├─ tsconfig.app.json
-├─ tsconfig.electron.json
-└─ package.json
+|-- electron/
+|   |-- main.ts              # Main process bootstrap and window lifecycle
+|   |-- preload.ts           # ContextBridge APIs exposed to renderer
+|   |-- ipc.ts               # IPC channel constants and handlers
+|   |-- logger.ts            # Main-process logger (file/console policy)
+|   `-- dotenv.ts            # .env parser + shared global typings
+|-- src/
+|   |-- renderer/
+|   |   |-- index.html       # Renderer HTML entry (Vite root)
+|   |   |-- main.tsx         # Renderer React bootstrap
+|   |   `-- App.tsx          # Root React component
+|   |-- styles/
+|   |   |-- index.css        # Global styles
+|   |   `-- App.css          # App-level styles
+|   `-- types/
+|       `-- renderer.d.ts    # Window global type declarations
+|-- public/                  # Static assets copied by Vite/electron-vite
+|-- logs/                    # Runtime logs (dev/non-packaged)
+|-- dist/                    # Build output (main/preload/renderer)
+|-- release/                 # electron-builder artifacts
+|-- electron.vite.config.ts
+|-- tsconfig.app.json
+|-- tsconfig.electron.json
+`-- package.json
 ```
 
 - All build outputs are placed under **`dist/`**: `dist/main/`, `dist/preload/`, and renderer files (`index.html`, `assets/`).
@@ -108,6 +103,7 @@ This project is organized to scale by separating concerns between Electron main,
 	- Define channel names and handlers in `electron/ipc.ts`.
 	- Expose minimal, safe APIs in `electron/preload.ts` via `contextBridge`.
 	- Consume those APIs in renderer through `window.electronAPI` with typed contracts in `src/types/renderer.d.ts`.
+	- Do not expose raw `ipcRenderer`; keep renderer access limited to named APIs.
 	- Prefer `invoke/handle` for request-response flows; reserve event channels for streaming/push use cases.
 
 - **Main-process service layering**
@@ -137,8 +133,9 @@ When adding a new desktop capability:
 ## Development Notes
 
 - In development mode, electron-vite passes the renderer URL through **`ELECTRON_RENDERER_URL`** (kept with fallback support for legacy `VITE_DEV_SERVER_URL`).
-- If Unicode/Korean output is broken in Windows terminal, run `npm run ko` first and execute commands in the same session.
+- If Unicode/Korean output is broken in Windows terminal, run `npm run lang` first and execute commands in the same session.
 - Renderer clicks on external `http(s)` links are handled via IPC (`app:open-external`) and opened in the **system default browser**, not inside the app.
+- The preload bridge exposes only `window.electronAPI`; raw `ipcRenderer` is intentionally not available in the renderer.
 
 ## Window State Restore Policy
 
@@ -198,10 +195,10 @@ npm run release
 
 ## Tech Stack
 
-- **Runtime:** Electron 39.8.5
-- **Bundler / Dev:** Vite 6, electron-vite 5
-- **UI:** React 18, TypeScript 5.x
-- **Quality:** ESLint 9, Prettier 3
-- **Packaging:** electron-builder 26
+- **Runtime:** Electron 39.8.10
+- **Bundler / Dev:** Vite 6.4.3, electron-vite 5
+- **UI:** React 18.3.1, TypeScript 5.9.3
+- **Quality:** ESLint 9, Prettier 3.8.4
+- **Packaging:** electron-builder 26.15.2
 
 ![footer](https://capsule-render.vercel.app/api?type=waving&color=timeGradient&height=70&section=footer)

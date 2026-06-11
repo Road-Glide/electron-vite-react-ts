@@ -4,7 +4,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { parseEnvBoolean, pickString, readDotEnvFile } from './dotenv'
 import { AppLogger } from './logger'
-import { registerIpcHandlers } from './ipc'
+import { openExternalUrl, registerIpcHandlers } from './ipc'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -347,13 +347,21 @@ function createWindow() {
 		y: safeWindowState.y,
 		icon: path.join(process.env.VITE_PUBLIC, 'electron-vite.svg'),
 		webPreferences: {
+			contextIsolation: true,
+			nodeIntegration: false,
 			preload: path.join(__dirname, '..', 'preload', 'preload.js'),
+			sandbox: true,
 		},
 	})
 
-	// Test active push message to Renderer-process.
-	win.webContents.on('did-finish-load', () => {
-		win?.webContents.send('main-process-message', new Date().toLocaleString())
+	win.webContents.setWindowOpenHandler(({ url }) => {
+		void openExternalUrl(url).catch((error: unknown) => {
+			logger.info('WARN', 'Blocked external window open', {
+				url,
+				error: error instanceof Error ? error.message : String(error),
+			})
+		})
+		return { action: 'deny' }
 	})
 
 	if (VITE_DEV_SERVER_URL) {

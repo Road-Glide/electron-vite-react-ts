@@ -30,11 +30,6 @@ declare global {
 		file: boolean
 		console: boolean
 	}
-
-	/** Used in Renderer process, expose in `preload.ts` */
-	interface Window {
-		ipcRenderer: import('electron').IpcRenderer
-	}
 }
 
 export function parseDotEnv(content: string): Record<string, string> {
